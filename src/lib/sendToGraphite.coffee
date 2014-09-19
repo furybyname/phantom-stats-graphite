@@ -15,13 +15,12 @@ getMetrics = (page, graphiteConfig, callback) ->
         metrics[name] = v
 
       if count == total
-        console.log metrics
-        callback(true)
-        ###client = graphite.createClient(graphiteConfig['url'])
+
+        client = graphite.createClient(graphiteConfig['url'])
 
         client.write(metrics, new Date().valueOf(), (err)->
           callback(true)
-        )###
+        )
     )
 
 count = 0
