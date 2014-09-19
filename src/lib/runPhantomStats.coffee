@@ -35,7 +35,7 @@ processData = (data, pageName, config, callback) ->
     result[stat] = value
 
   file = "./data/#{pageName}.json"
-  ensureDirectoryExists('./data', ->
+  ensureDirectoryExists(process.cwd() + '/data', ->
     fs.unlink(file, (err) -> fs.writeFile(file, JSON.stringify(result), (err) -> callback(err is null, err)))
   )
 
