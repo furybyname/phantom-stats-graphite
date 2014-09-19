@@ -1,0 +1,27 @@
+{
+  "name": "phantom-stats-graphite",
+  "description": "Send phantomjs-stats to graphite",
+  "author": "Dave Archer",
+  "version": "0.1.3",
+  "repository": {
+    "url": "git@github.com:furybyname/phantom-stats.git",
+    "type": "git"
+  },
+  "main": "./lib/main",
+  "bin": {
+      "send" : "./bin/send-to-graphite",
+      "run-phantom-stats" : "./bin/run-phantom-stats"
+  },
+  "dependencies": {
+    "grunt": "~0.4.2",
+    "grunt-cli": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-coffee": "*",
+    "phantom-stats": "*",
+    "graphite": "*",
+    "lodash": "*"
+  },
+  "engines": {
+      "node": "*"
+  }
+}

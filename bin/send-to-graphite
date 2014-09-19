@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+var path = require('path');
+var fs = require('fs');
+var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
+var m = path.join(path.dirname(fs.realpathSync(__filename)), '../');
+var s = require(lib + '/sendToGraphite.js');
+
+if (process.argv.length < 3) {
+  console.log('Usage: send-to-graphite <configFile>');
+  process.exit(1);
+}
+
+configFile = process.argv[2]
+
+fs.readFile(configFile, function(err, data) {
+    config = JSON.parse(data)
+
+    s.run(config['urls'], config['graphite'], function(result) {
+    process.exit(0);
+    });
+});
+
