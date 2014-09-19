@@ -5,7 +5,8 @@ fs = require('fs')
 getMetrics = (page, graphiteConfig, callback) ->
   prefix = graphiteConfig['prefix']
 
-  fs.readFile(process.cwd() + "/data/#{page}.json", (err, raw) ->
+  p = process.cwd() + "/data/#{page}.json"
+  fs.readFile(p, (err, raw) ->
       count++
 
       parsed = JSON.parse(raw)
@@ -26,7 +27,7 @@ getMetrics = (page, graphiteConfig, callback) ->
 count = 0
 total = 0
 metrics = {}
-process = (urlConfig, graphiteConfig, callback) ->
+processRun = (urlConfig, graphiteConfig, callback) ->
 
 
   count = 0
@@ -36,4 +37,4 @@ process = (urlConfig, graphiteConfig, callback) ->
 
 
 
-exports.run = process
+exports.run = processRun
