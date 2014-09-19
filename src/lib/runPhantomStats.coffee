@@ -14,6 +14,20 @@ getValue = (path, data) ->
 
   return -1
 
+ensureDirectoryExists =(path, mask, cb) ->
+    if typeof mask == 'function'
+      cb = mask
+      mask = 0777
+
+    fs.mkdir(path, mask, (err) ->
+
+      if (err)
+        if (err.code == 'EEXIST') then cb(null) else cb(err)
+
+      else
+      cb(null)
+    )
+
 processData = (data, pageName, config, callback) ->
   result = {}
   for stat, path of config
@@ -21,15 +35,18 @@ processData = (data, pageName, config, callback) ->
     result[stat] = value
 
   file = "./data/#{pageName}.json"
-  fs.unlink(file, (err) -> fs.writeFile(file, JSON.stringify(result), (err) -> callback(err is null)))
+  ensureDirectoryExists('./data', ->
+    fs.unlink(file, (err) -> fs.writeFile(file, JSON.stringify(result), (err) -> callback(err is null, err)))
+  )
+
 
 
 isDone = (count, total) -> count >= total
 
 doRun = (page, url, statsConfig, callback) ->
   stats.run(url, (data) ->
-      processData(data, page, statsConfig, (success) ->
-        if success == false then console.log pageName
+      processData(data, page, statsConfig, (success, err) ->
+        if success == false then console.log page, err
         process.exit(1) unless success
 
         if isDone(current++, total) then callback(true)

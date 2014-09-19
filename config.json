@@ -1,6 +1,6 @@
 {
     "urls" : {
-        "home" : "http://somesite.com"
+        "home" : "http://www.google.com"
     },
     "graphite" : {
         "url" : "plaintext://192.168.1.100:2003/",
