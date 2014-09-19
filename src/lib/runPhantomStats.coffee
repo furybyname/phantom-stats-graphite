@@ -17,7 +17,7 @@ getValue = (path, data) ->
 ensureDirectoryExists =(path, mask, cb) ->
     if typeof mask == 'function'
       cb = mask
-      mask = 0777
+      mask = 0o0777
 
     fs.mkdir(path, mask, (err) ->
 
