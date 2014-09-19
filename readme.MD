@@ -7,7 +7,7 @@ HARvest data from multiple urls and send to graphite!
 
 `npm install phantom-stats-graphite`
 
-or `npm install -g phantom-stats-graphite`
+or `sudo npm install -g phantom-stats-graphite`
 
 ### Usage
 
