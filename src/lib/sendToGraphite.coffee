@@ -17,8 +17,8 @@ getMetrics = (page, graphiteConfig, callback) ->
 
       if count == total
 
-        console.log metrics
-        callback(true)
+        #console.log metrics
+        #callback(true)
         client = graphite.createClient(graphiteConfig['url'])
 
         client.write(metrics, new Date().valueOf(), (err)->
