@@ -1,14 +1,10 @@
 {
     "urls" : {
-        "home" : "http://www.skyscanner.net/",
-        "hotels" : "http://www.skyscanner.net/hotels.html",
-        "carhire" : "http://www.skyscanner.net/carhire/",
-        "flights_to_london" : "http://www.skyscanner.net/carhire/",
-        "mobile_landing" : "http://www.skyscanner.net/mobile.html"
+        "hotels" : "http://www.somesite.com/index.html"
     },
     "har-summary": {
         "cdn": {
-                    "internal": ["http://css.skyscnr.com", "http://images.skyscnr.com"]
+                    "internal": ["http://static.somesite.com"]
                 }
     },
     "graphite" : {

@@ -43,8 +43,8 @@ processData = (data, pageName, config, callback) ->
 
 isDone = (count, total) -> count >= total
 
-doRun = (page, url, statsConfig, callback) ->
-  stats.run(url, (data) ->
+doRun = (page, url, statsConfig, harSummaryConfig, callback) ->
+  stats.run(url, harSummaryConfig, (data) ->
       processData(data, page, statsConfig, (success, err) ->
         if success == false then console.log page, err
         process.exit(1) unless success
@@ -55,10 +55,10 @@ doRun = (page, url, statsConfig, callback) ->
 
 current = 0
 total = 0
-run = (urlConfig, statsConfig, callback) ->
+run = (urlConfig, statsConfig, harSummaryConfig, callback) ->
   total = _.keys(urlConfig).length
 
   for pageName, url of urlConfig
-    doRun(pageName, url, statsConfig, callback)
+    doRun(pageName, url, statsConfig, harSummaryConfig, callback)
 
 exports.run = run

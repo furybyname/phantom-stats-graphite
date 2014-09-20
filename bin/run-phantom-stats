@@ -15,6 +15,6 @@ configFile = process.argv[2]
 fs.readFile(configFile, function(err, data) {
     config = JSON.parse(data)
 
-    s.run(config['urls'], config['stats'], function(result) { console.log(result);});
+    s.run(config['urls'], config['stats'], config['har-summary'] || {}, function(result) { console.log(result);});
 });
 
