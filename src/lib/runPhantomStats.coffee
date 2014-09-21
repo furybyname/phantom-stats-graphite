@@ -3,14 +3,16 @@ fs = require('fs')
 _ = require('lodash')
 
 getValue = (path, data) ->
-  parts = path.split('.')
-  current = 0
-  d = data
-  while true
-    d = d[parts[current]]
-    current += 1
-    if parts.length == current
-      return d
+  try
+    parts = path.split('.')
+    current = 0
+    d = data
+    while true
+      d = d[parts[current]]
+      current += 1
+      if parts.length == current
+        return d
+  catch
 
   return -1
 
@@ -32,6 +34,9 @@ processData = (data, pageName, config, callback) ->
   result = {}
   for stat, path of config
     value = getValue(path, data)
+    if value == -1
+      continue
+
     result[stat] = value
 
   file = process.cwd() + "/data/#{pageName}.json"
