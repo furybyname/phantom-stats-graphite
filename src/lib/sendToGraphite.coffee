@@ -2,23 +2,22 @@ graphite = require('graphite')
 _ = require('lodash')
 fs = require('fs')
 
-getMetrics = (page, graphiteConfig, callback) ->
+getMetrics = (page, device, graphiteConfig, callback) ->
   prefix = graphiteConfig['prefix']
 
-  p = process.cwd() + "/data/#{page}.json"
+  filename = "#{page}.#{device}"
+  p = process.cwd() + "/data/#{filename}.json"
   fs.readFile(p, (err, raw) ->
       count++
 
       parsed = JSON.parse(raw)
 
       for k, v of parsed
-        name = "#{prefix}.#{page}.#{k}"
+        name = "#{prefix}.#{device}.#{page}.#{k}"
         metrics[name] = v
 
       if count == total
 
-        #console.log metrics
-        #callback(true)
         client = graphite.createClient(graphiteConfig['url'])
 
         client.write(metrics, new Date().valueOf(), (err)->
@@ -29,13 +28,14 @@ getMetrics = (page, graphiteConfig, callback) ->
 count = 0
 total = 0
 metrics = {}
-processRun = (urlConfig, graphiteConfig, callback) ->
+processRun = (urlConfig, graphiteConfig, devices, callback) ->
 
 
   count = 0
-  total = _.keys(urlConfig).length
+  total = _.keys(urlConfig).length * devices.length
   for page, url of urlConfig
-    getMetrics(page, graphiteConfig, callback)
+    for device in devices
+      getMetrics(page, device, graphiteConfig, callback)
 
 
 

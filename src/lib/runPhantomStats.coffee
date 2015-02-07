@@ -30,7 +30,7 @@ ensureDirectoryExists =(path, mask, cb) ->
       cb(null)
     )
 
-processData = (data, pageName, config, callback) ->
+processData = (data, pageName, device, config, callback) ->
   result = {}
   for stat, path of config
     value = getValue(path, data)
@@ -39,7 +39,7 @@ processData = (data, pageName, config, callback) ->
 
     result[stat] = value
 
-  file = process.cwd() + "/data/#{pageName}.json"
+  file = process.cwd() + "/data/#{pageName}.#{device}.json"
   ensureDirectoryExists(process.cwd() + '/data', ->
     fs.unlink(file, (err) -> fs.writeFile(file, JSON.stringify(result), (err) -> callback(err is null, err)))
   )
@@ -48,22 +48,25 @@ processData = (data, pageName, config, callback) ->
 
 isDone = (count, total) -> count >= total
 
-doRun = (page, url, statsConfig, harSummaryConfig, callback) ->
-  stats.run(url, harSummaryConfig, (data) ->
-      processData(data, page, statsConfig, (success, err) ->
-        if success == false then console.log page, err
-        process.exit(1) unless success
+doRun = (page, url, device, statsConfig, harSummaryConfig, callback) ->
+  cb = (data) ->
 
-        if isDone(current++, total) then callback(true)
-      )
+    processData(data, page, device, statsConfig, (success, err) ->
+      if success == false then console.log page, err
+      process.exit(1) unless success
+
+      if isDone(current++, total) then callback(true)
     )
+
+  stats.run(url, harSummaryConfig, cb, device)
 
 current = 0
 total = 0
-run = (urlConfig, statsConfig, harSummaryConfig, callback) ->
-  total = _.keys(urlConfig).length
+run = (urlConfig, statsConfig, harSummaryConfig, devices, callback) ->
+  total = _.keys(urlConfig).length * devices.length
 
   for pageName, url of urlConfig
-    doRun(pageName, url, statsConfig, harSummaryConfig, callback)
+    for device in devices
+      doRun(pageName, url, device, statsConfig, harSummaryConfig, callback)
 
 exports.run = run

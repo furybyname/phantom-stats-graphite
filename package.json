@@ -2,7 +2,7 @@
   "name": "phantom-stats-graphite",
   "description": "Send phantomjs-stats to graphite",
   "author": "Dave Archer",
-  "version": "0.1.904",
+  "version": "0.2.0",
   "repository": {
     "url": "git@github.com:furybyname/phantom-stats.git",
     "type": "git"
@@ -17,7 +17,7 @@
     "grunt-cli": "*",
     "grunt-contrib-watch": "*",
     "grunt-contrib-coffee": "*",
-    "phantom-stats": "*",
+    "phantom-stats": "~0.2.1",
     "graphite": "*",
     "lodash": "*"
   },

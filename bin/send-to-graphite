@@ -15,7 +15,7 @@ configFile = process.argv[2]
 fs.readFile(configFile, function(err, data) {
     config = JSON.parse(data)
 
-    s.run(config['urls'], config['graphite'], function(result) {
+    s.run(config['urls'], config['graphite'], config['devices'] || ['desktop'], function(result) {
     process.exit(0);
     });
 });
